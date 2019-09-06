@@ -226,14 +226,14 @@ begin
   Result := FEquipes;
 end;
 
-procedure TControlaCampeonato.GerarSemiFinal(const AEquipes: TList<TEquipe>);
+procedure TControlaCampeonato.GerarSemiFinal(AEquipes: TList<TEquipe>);
 var
   vPartida: TPartida;
 begin
   while AEquipes.Count > 0 do
   begin
     Random(Pred(AEquipes.Count));
-    vPartida.AEquipes.Delete();
+    AEquipes.Delete(1);
   end;
 end;
 
