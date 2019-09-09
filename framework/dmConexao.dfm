@@ -4,7 +4,9 @@ object Conexao: TConexao
   Width = 293
   object FDConexao: TFDConnection
     Params.Strings = (
-      'Database=D:\Aula HORUS 2019\Delphi\Placares\db\PLACARES.FDB'
+      
+        'Database=D:\Aula HORUS 2019\Delphi\Campeonato\Campeonato\db\PLAC' +
+        'ARES.FDB'
       'User_Name=sysdba'
       'Password=masterkey'
       'DriverID=FB')

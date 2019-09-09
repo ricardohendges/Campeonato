@@ -1,68 +1,160 @@
 object FrameJogo: TFrameJogo
   Left = 0
   Top = 0
-  Width = 448
-  Height = 85
-  Color = clHighlight
+  Width = 473
+  Height = 119
+  Color = clWindow
   ParentBackground = False
   ParentColor = False
   TabOrder = 0
-  object edtNome1: TEdit
-    Left = 16
-    Top = 16
-    Width = 273
-    Height = 21
-    Enabled = False
+  object imgTime1: TImage
+    Left = 0
+    Top = 8
+    Width = 50
+    Height = 50
+    Proportional = True
+    Stretch = True
+  end
+  object imgTime2: TImage
+    Left = 0
+    Top = 61
+    Width = 50
+    Height = 50
+    Proportional = True
+    Stretch = True
+  end
+  object pnlTime1: TPanel
+    Left = 51
+    Top = 8
+    Width = 415
+    Height = 50
+    BevelOuter = bvNone
+    Caption = 'pnlTime1'
+    Color = clHighlight
+    ParentBackground = False
     TabOrder = 0
+    object edtNome1: TEdit
+      Left = 5
+      Top = 7
+      Width = 273
+      Height = 36
+      Enabled = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -23
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 0
+    end
+    object edtResultado11: TEdit
+      Left = 282
+      Top = 7
+      Width = 40
+      Height = 36
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -23
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 1
+      OnExit = edtResultado12Exit
+    end
+    object edtResultado31: TEdit
+      Left = 369
+      Top = 7
+      Width = 40
+      Height = 36
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -23
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 3
+      OnExit = edtResultado32Exit
+    end
+    object edtResultado21: TEdit
+      Left = 326
+      Top = 7
+      Width = 40
+      Height = 36
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -23
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 2
+      OnExit = edtResultado22Exit
+    end
   end
-  object edtNome2: TEdit
-    Left = 16
-    Top = 48
-    Width = 273
-    Height = 21
-    Enabled = False
+  object pnlTime2: TPanel
+    Left = 51
+    Top = 61
+    Width = 415
+    Height = 50
+    BevelOuter = bvNone
+    Caption = 'Panel1'
+    Color = clHighlight
+    ParentBackground = False
     TabOrder = 1
-  end
-  object edtResultado11: TEdit
-    Left = 295
-    Top = 16
-    Width = 42
-    Height = 21
-    TabOrder = 2
-  end
-  object edtResultado12: TEdit
-    Left = 295
-    Top = 48
-    Width = 42
-    Height = 21
-    TabOrder = 3
-  end
-  object edtResultado21: TEdit
-    Left = 343
-    Top = 16
-    Width = 42
-    Height = 21
-    TabOrder = 4
-  end
-  object edtResultado22: TEdit
-    Left = 343
-    Top = 48
-    Width = 42
-    Height = 21
-    TabOrder = 5
-  end
-  object edtResultado31: TEdit
-    Left = 391
-    Top = 16
-    Width = 42
-    Height = 21
-    TabOrder = 6
-  end
-  object edtResultado32: TEdit
-    Left = 391
-    Top = 48
-    Width = 42
-    Height = 21
-    TabOrder = 7
+    object edtNome2: TEdit
+      Left = 5
+      Top = 7
+      Width = 273
+      Height = 36
+      Enabled = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -23
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 0
+    end
+    object edtResultado12: TEdit
+      Left = 282
+      Top = 7
+      Width = 40
+      Height = 36
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -23
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 1
+      OnExit = edtResultado12Exit
+    end
+    object edtResultado22: TEdit
+      Left = 326
+      Top = 7
+      Width = 40
+      Height = 36
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -23
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 2
+      OnExit = edtResultado22Exit
+    end
+    object edtResultado32: TEdit
+      Left = 369
+      Top = 7
+      Width = 40
+      Height = 36
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -23
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 3
+      OnExit = edtResultado32Exit
+    end
   end
 end

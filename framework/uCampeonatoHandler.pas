@@ -12,10 +12,12 @@ type
 
   IControlaCampeonato = interface
     ['{409E4335-664C-409F-A45E-9A0E7BD63BE8}']
+    function Nome: string;
     function Rodadas: TList<TRodada>;
     function Equipes: TList<TEquipe>;
-    function Partidas(ARodada: TRodada): TList<TPartida>; overload;
+    function Partidas: TList<TPartida>;
     procedure SetPartida(APartida: TPartida);
+    procedure CriarRodadas(const AEquipes: TList<TEquipe>);
   end;
 
   TControlaCampeonato = class(TInterfacedObject, IControlaCampeonato)
@@ -26,22 +28,28 @@ type
     FRodadas: TList<TRodada>;
     FEquipes: TList<TEquipe>;
     FEquipesJogando: TList<TEquipe>;
+    FPartidas: TList<TPartida>;
     constructor Create(AIDCampeonato: Integer); reintroduce;
     destructor Destroy; override;
   private
-    procedure CarregarRodadas;
-    procedure CriarRodadas(const AEquipes: TList<TEquipe>);
-
+    procedure GerarQuartasFinal(AEquipes: TList<TEquipe>);
     procedure GerarSemiFinal(AEquipes: TList<TEquipe>);
-
-    procedure CarregarEquipes;
+    procedure GerarFinal(AEquipes: TList<TEquipe>);
 
     procedure CarregarCampeonato;
+    procedure CarregarEquipes;
+    procedure CarregarRodadas;
+
+    procedure CriarPartidasRodada(AEquipes: TList<TEquipe>; ARodada: TRodada);
   public
+    function Nome: string;
+
     function Rodadas: TList<TRodada>;
     function Equipes: TList<TEquipe>;
-    function Partidas(ARodada: TRodada): TList<TPartida>;
+    function Partidas: TList<TPartida>;
     procedure SetPartida(APartida: TPartida);
+
+    procedure CriarRodadas(const AEquipes: TList<TEquipe>);
 
     class function GetCampeonato(AIDCamp: Integer): IControlaCampeonato; static;
   end;
@@ -133,82 +141,59 @@ begin
   FRodadas := TList<TRodada>.Create;
   FEquipes := TList<TEquipe>.Create;
   FEquipesJogando := TList<TEquipe>.Create;
+  FPartidas := TList<TPartida>.Create;
 
   CarregarCampeonato;
 end;
 
-procedure TControlaCampeonato.CriarRodadas(const AEquipes: TList<TEquipe>);
+procedure TControlaCampeonato.CriarPartidasRodada(AEquipes: TList<TEquipe>;
+  ARodada: TRodada);
 var
-  vRodada: TRodada;
+  vPartida: TPartida;
+  vEquipeSelecionada: Integer;
 begin
-  vRodada.Status := tsAguardando;
+  while AEquipes.Count > 0 do
+  begin
+    vPartida.ID := GetNewSequence('GEN_PARTIDA_ID');
+    vPartida.Rodada := ARodada;
+
+    vEquipeSelecionada := Random(AEquipes.Count);
+    vPartida.Equipe1 := AEquipes.Items[vEquipeSelecionada];
+    AEquipes.Delete(vEquipeSelecionada);
+
+    vEquipeSelecionada := Random(AEquipes.Count);
+    vPartida.Equipe2 := AEquipes.Items[vEquipeSelecionada];
+    AEquipes.Delete(vEquipeSelecionada);
+
+    vPartida.Status := tsAguardando;
+    vPartida.Pontuacao.Ponto11 := 0;
+    vPartida.Pontuacao.Ponto12 := 0;
+    vPartida.Pontuacao.Ponto13 := 0;
+    vPartida.Pontuacao.Ponto21 := 0;
+    vPartida.Pontuacao.Ponto22 := 0;
+    vPartida.Pontuacao.Ponto23 := 0;
+
+    FPartidas.Add(vPartida);
+  end;
+end;
+
+procedure TControlaCampeonato.CriarRodadas(const AEquipes: TList<TEquipe>);
+begin
   case TTipoCampeonato(AEquipes.Count) of
     tcFinal:
-      vRodada.Descricao := 'FINAL';
-    tcTodos3:
-      begin
-        vRodada.Descricao := '1 Grupo de 3';
-        vRodada.Observacao := 'Todos x Todos, saem os dois melhores!';
-      end;
+      GerarFinal(AEquipes);
     tcSemiFinal:
-      begin
-        vRodada.Descricao := 'SEMI FINAL';
-        GerarSemiFinal(AEquipes);
-      end;
-    tcTodos5:
-      begin
-        vRodada.Descricao := '';
-        GerarSemiFinal(AEquipes);
-      end;
-    tcTodos2x3:
-      begin
-        vRodada.Descricao := 'SEMI FINAL';
-        GerarSemiFinal(AEquipes);
-      end;
-    tcTodos1x3e1x4:
-      begin
-        vRodada.Descricao := 'SEMI FINAL';
-        GerarSemiFinal(AEquipes);
-      end;
+      GerarSemiFinal(AEquipes);
     tcQuartas:
-      begin
-        vRodada.Descricao := 'SEMI FINAL';
-        GerarSemiFinal(AEquipes);
-      end;
-    tcTodos3x3:
-      begin
-        vRodada.Descricao := 'SEMI FINAL';
-        GerarSemiFinal(AEquipes);
-      end;
-    tcTodos2x3e1x4:
-      begin
-        vRodada.Descricao := 'SEMI FINAL';
-        GerarSemiFinal(AEquipes);
-      end;
-    tcTodos1x3e2x4:
-      begin
-        vRodada.Descricao := 'SEMI FINAL';
-        GerarSemiFinal(AEquipes);
-      end;
-    tcTodos3x4:
-      begin
-        vRodada.Descricao := 'SEMI FINAL';
-        GerarSemiFinal(AEquipes);
-      end;
-    tcTodos3x3e1x4:
-      begin
-        vRodada.Descricao := 'SEMI FINAL';
-        GerarSemiFinal(AEquipes);
-      end;
-    tcETC:
-      begin
-        vRodada.Descricao := 'SEMI FINAL';
-        GerarSemiFinal(AEquipes);
-      end;
+      GerarQuartasFinal(AEquipes);
   else
     raise Exception.Create('Quantidade de Equipes não tratada.');
   end;
-  FRodadas.Add(vRodada);
+end;
+
+function TControlaCampeonato.Nome: string;
+begin
+  Result := FNome;
 end;
 
 destructor TControlaCampeonato.Destroy;
@@ -216,25 +201,52 @@ begin
   FreeAndNil(FRodadas);
   FreeAndNil(FEquipes);
   FreeAndNil(FEquipesJogando);
+  FreeAndNil(FPartidas);
   inherited;
 end;
 
 function TControlaCampeonato.Equipes: TList<TEquipe>;
 begin
-  if not Assigned(FEquipes) then
-    FEquipes := TList<TEquipe>.Create;
   Result := FEquipes;
+end;
+
+procedure TControlaCampeonato.GerarFinal(AEquipes: TList<TEquipe>);
+var
+  vRodada: TRodada;
+begin
+  vRodada.ID := GetNewSequence('GEN_RODADA_ID');
+  vRodada.Descricao := 'Final';
+  vRodada.Observacao := '';
+  vRodada.Status := tsAguardando;
+
+  CriarPartidasRodada(AEquipes, vRodada);
+  FRodadas.Add(vRodada);
+end;
+
+procedure TControlaCampeonato.GerarQuartasFinal(AEquipes: TList<TEquipe>);
+var
+  vRodada: TRodada;
+begin
+  vRodada.ID := GetNewSequence('GEN_RODADA_ID');
+  vRodada.Descricao := 'Quartas';
+  vRodada.Observacao := '';
+  vRodada.Status := tsAguardando;
+
+  CriarPartidasRodada(AEquipes, vRodada);
+  FRodadas.Add(vRodada);
 end;
 
 procedure TControlaCampeonato.GerarSemiFinal(AEquipes: TList<TEquipe>);
 var
-  vPartida: TPartida;
+  vRodada: TRodada;
 begin
-  while AEquipes.Count > 0 do
-  begin
-    Random(Pred(AEquipes.Count));
-    AEquipes.Delete(1);
-  end;
+  vRodada.ID := GetNewSequence('GEN_RODADA_ID');
+  vRodada.Descricao := 'Semi';
+  vRodada.Observacao := '';
+  vRodada.Status := tsAguardando;
+
+  CriarPartidasRodada(AEquipes, vRodada);
+  FRodadas.Add(vRodada);
 end;
 
 class function TControlaCampeonato.GetCampeonato(AIDCamp: Integer)
@@ -243,21 +255,29 @@ begin
   Result := TControlaCampeonato.Create(AIDCamp);
 end;
 
-function TControlaCampeonato.Partidas(ARodada: TRodada): TList<TPartida>;
+function TControlaCampeonato.Partidas: TList<TPartida>;
 begin
-
+  Result := FPartidas;
 end;
 
 function TControlaCampeonato.Rodadas: TList<TRodada>;
 begin
-  if not Assigned(FRodadas) then
-    FRodadas := TList<TRodada>.Create;
   Result := FRodadas;
 end;
 
 procedure TControlaCampeonato.SetPartida(APartida: TPartida);
+var
+  vPartida: TPartida;
 begin
-
+  for vPartida in FPartidas do
+  begin
+    if vPartida.ID = APartida.ID then
+    begin
+      FPartidas.Remove(vPartida);
+      FPartidas.Add(APartida);
+      Exit;
+    end;
+  end;
 end;
 
 end.

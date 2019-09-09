@@ -3,8 +3,8 @@ object frmGerCampeonato: TfrmGerCampeonato
   Top = 0
   BorderIcons = []
   Caption = 'Gerenciamento Campeonato'
-  ClientHeight = 548
-  ClientWidth = 646
+  ClientHeight = 568
+  ClientWidth = 970
   Color = clWindow
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,46 +14,142 @@ object frmGerCampeonato: TfrmGerCampeonato
   OldCreateOrder = False
   WindowState = wsMaximized
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
   object pnlPrincipal: TPanel
     Left = 0
     Top = 49
-    Width = 646
-    Height = 499
+    Width = 970
+    Height = 519
     Align = alClient
     BevelOuter = bvNone
     Color = clWindow
     ParentBackground = False
     TabOrder = 0
+    ExplicitTop = 47
+    ExplicitWidth = 646
+    ExplicitHeight = 499
+    object pnlFase1: TPanel
+      Left = 0
+      Top = 0
+      Width = 369
+      Height = 519
+      Align = alLeft
+      BevelOuter = bvNone
+      PopupMenu = PP1
+      TabOrder = 0
+      ExplicitLeft = 8
+      object pnlTop1: TPanel
+        Left = 0
+        Top = 478
+        Width = 369
+        Height = 41
+        Align = alBottom
+        BevelOuter = bvNone
+        Caption = 'Fase 1'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -27
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 0
+      end
+    end
+    object pnlFase2: TPanel
+      Left = 369
+      Top = 0
+      Width = 369
+      Height = 519
+      Align = alLeft
+      BevelOuter = bvNone
+      PopupMenu = PP2
+      TabOrder = 1
+      ExplicitLeft = 8
+      object pnlTop2: TPanel
+        Left = 0
+        Top = 478
+        Width = 369
+        Height = 41
+        Align = alBottom
+        BevelOuter = bvNone
+        Caption = 'Semi Final'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -27
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 0
+      end
+    end
+    object pnlFase3: TPanel
+      Left = 738
+      Top = 0
+      Width = 369
+      Height = 519
+      Align = alLeft
+      BevelOuter = bvNone
+      PopupMenu = PP3
+      TabOrder = 2
+      ExplicitLeft = 601
+      object imgCampeao: TImage
+        Left = 0
+        Top = 0
+        Width = 369
+        Height = 478
+        Align = alClient
+        ExplicitTop = 8
+      end
+      object pnlTop3: TPanel
+        Left = 0
+        Top = 478
+        Width = 369
+        Height = 41
+        Align = alBottom
+        BevelOuter = bvNone
+        Caption = 'Final'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -27
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 0
+      end
+    end
   end
   object pnlInfos: TPanel
     Left = 0
     Top = 0
-    Width = 646
+    Width = 970
     Height = 49
     Align = alTop
     Caption = 'Beat Saber'
     Color = clWindow
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
-    Font.Height = -20
+    Font.Height = -40
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentBackground = False
     ParentFont = False
     TabOrder = 1
+    ExplicitTop = -6
+    ExplicitWidth = 646
     DesignSize = (
-      646
+      970
       49)
     object SpeedButton1: TSpeedButton
-      Left = 604
+      Left = 928
       Top = 6
       Width = 35
       Height = 35
       Action = actSair
       Anchors = [akTop, akRight]
       Flat = True
+      ExplicitLeft = 604
     end
   end
   object imgHabilitado: TImageList
@@ -1423,6 +1519,30 @@ object frmGerCampeonato: TfrmGerCampeonato
       Caption = 'actPegarCamp'
       ShortCut = 116
       OnExecute = actPegarCampExecute
+    end
+  end
+  object PP1: TPopupMenu
+    Left = 184
+    Top = 265
+    object FinalizarRodada1: TMenuItem
+      Caption = 'Finalizar Rodada'
+      OnClick = FinalizarRodada1Click
+    end
+  end
+  object PP2: TPopupMenu
+    Left = 552
+    Top = 265
+    object MenuItem1: TMenuItem
+      Caption = 'Finalizar Rodada'
+      OnClick = MenuItem1Click
+    end
+  end
+  object PP3: TPopupMenu
+    Left = 864
+    Top = 265
+    object MenuItem2: TMenuItem
+      Caption = 'Finalizar Rodada'
+      OnClick = MenuItem2Click
     end
   end
 end
