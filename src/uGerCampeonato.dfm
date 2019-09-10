@@ -27,9 +27,6 @@ object frmGerCampeonato: TfrmGerCampeonato
     Color = clWindow
     ParentBackground = False
     TabOrder = 0
-    ExplicitTop = 47
-    ExplicitWidth = 646
-    ExplicitHeight = 499
     object pnlFase1: TPanel
       Left = 0
       Top = 0
@@ -39,7 +36,6 @@ object frmGerCampeonato: TfrmGerCampeonato
       BevelOuter = bvNone
       PopupMenu = PP1
       TabOrder = 0
-      ExplicitLeft = 8
       object pnlTop1: TPanel
         Left = 0
         Top = 478
@@ -66,7 +62,6 @@ object frmGerCampeonato: TfrmGerCampeonato
       BevelOuter = bvNone
       PopupMenu = PP2
       TabOrder = 1
-      ExplicitLeft = 8
       object pnlTop2: TPanel
         Left = 0
         Top = 478
@@ -93,13 +88,14 @@ object frmGerCampeonato: TfrmGerCampeonato
       BevelOuter = bvNone
       PopupMenu = PP3
       TabOrder = 2
-      ExplicitLeft = 601
       object imgCampeao: TImage
         Left = 0
         Top = 0
         Width = 369
         Height = 478
         Align = alClient
+        Proportional = True
+        Stretch = True
         ExplicitTop = 8
       end
       object pnlTop3: TPanel
@@ -136,8 +132,6 @@ object frmGerCampeonato: TfrmGerCampeonato
     ParentBackground = False
     ParentFont = False
     TabOrder = 1
-    ExplicitTop = -6
-    ExplicitWidth = 646
     DesignSize = (
       970
       49)
